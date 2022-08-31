@@ -4,15 +4,18 @@
 //
 
 struct GameManager {
-    private let rockPaperScissorsGame: RockPaperScissorsManager
-    private var mukjipaGame: MukjipaManager
+	private var rockPaperScissorsGame: RockPaperScissorsManager
+	private var mukjipaGame: MukjipaManager
     
-    init(_ rockPaperScissorsGame: RockPaperScissorsManager, _ mukjipaGame: MukjipaManager) {
+	init(
+		_ rockPaperScissorsGame: RockPaperScissorsManager,
+		_ mukjipaGame: MukjipaManager
+	) {
         self.rockPaperScissorsGame = rockPaperScissorsGame
         self.mukjipaGame = mukjipaGame
     }
     
-    mutating func startRockPaperScissors() {
+	mutating func startRockPaperScissors() {
         let result = rockPaperScissorsGame.startGame()
         
         print(result.description)
@@ -22,12 +25,12 @@ struct GameManager {
             startRockPaperScissors()
         case .exit:
             return
-        default:
-            startMukjipa(result)
+		case .computerWin, .userWin:
+			startMukjipa(result)
         }
     }
     
-    private mutating func startMukjipa(_ result: GameState) {
+	private mutating func startMukjipa(_ result: GameState) {
         let result = mukjipaGame.startGame(from: result)
         
         switch result {
@@ -39,8 +42,8 @@ struct GameManager {
         case .error:
             print(result.description)
             startMukjipa(result)
-        default:
-            startMukjipa(result)
+		case .userWin, .computerWin:
+			startMukjipa(result)
         }
     }
 }
