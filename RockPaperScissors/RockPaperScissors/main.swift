@@ -3,5 +3,8 @@
 //  Created by Wonbi, 미니
 //
 
-var game = GameManager(RockPaperScissorsManager(), MukjipaManager())
+var rockPaperScissorsManager: Gamble = RockPaperScissorsManager()
+var mukjipaScissorsManager: Gamble = MukjipaManager()
+var game = GameManager(rockPaperScissorsManager, mukjipaScissorsManager)
+
 game.startRockPaperScissors()

@@ -4,19 +4,20 @@
 //
 
 struct GameManager {
-	private var rockPaperScissorsGame: RockPaperScissorsManager
-	private var mukjipaGame: MukjipaManager
+    private var rockPaperScissorsGame: Gamble
+    private var mukjipaGame: Gamble
     
-	init(
-		_ rockPaperScissorsGame: RockPaperScissorsManager,
-		_ mukjipaGame: MukjipaManager
-	) {
+    init(_ rockPaperScissorsGame: Gamble, _ mukjipaGame: Gamble) {
         self.rockPaperScissorsGame = rockPaperScissorsGame
         self.mukjipaGame = mukjipaGame
     }
     
-	mutating func startRockPaperScissors() {
-        let result = rockPaperScissorsGame.startGame()
+    mutating func startRockPaperScissors() {
+        guard var rockPaperScissorsGame = rockPaperScissorsGame as? RockPaperScissorsManager else {
+            return startRockPaperScissors()
+        }
+        
+        let result = rockPaperScissorsGame.startGame(from: nil)
         
         print(result.description)
         
@@ -25,12 +26,16 @@ struct GameManager {
             startRockPaperScissors()
         case .exit:
             return
-		case .computerWin, .userWin:
-			startMukjipa(result)
+        case .computerWin, .userWin:
+            startMukjipa(result)
         }
     }
     
-	private mutating func startMukjipa(_ result: GameState) {
+    private mutating func startMukjipa(_ result: GameState) {
+        
+        guard var mukjipaGame = mukjipaGame as? MukjipaManager else {
+            return
+        }
         let result = mukjipaGame.startGame(from: result)
         
         switch result {
@@ -42,8 +47,8 @@ struct GameManager {
         case .error:
             print(result.description)
             startMukjipa(result)
-		case .userWin, .computerWin:
-			startMukjipa(result)
+        case .userWin, .computerWin:
+            startMukjipa(result)
         }
     }
 }
