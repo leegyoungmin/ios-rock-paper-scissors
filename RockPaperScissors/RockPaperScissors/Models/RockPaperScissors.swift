@@ -3,16 +3,11 @@
 //  Created by Wonbi, 미니
 //
 
-enum RockPaperScissors: Int, CaseIterable, GameElement {
+enum RockPaperScissors: Int, RockPaperScissorsElement {
     case none = 0
     case scissors = 1
     case rock = 2
     case paper = 3
-    
-    func chooseComputerNumber(between min: Int, and max: Int) -> Int {
-        let choiceNumber = Int.random(in: min...max)
-        return choiceNumber
-    }
         
     func generateComputerCard() -> Self {
         let computerCard = Self.allCases[chooseComputerNumber(between: 1, and: 3)]
