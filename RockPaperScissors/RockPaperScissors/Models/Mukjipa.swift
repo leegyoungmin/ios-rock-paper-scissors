@@ -3,7 +3,7 @@
 //  Created by Wonbi, 미니
 //
 
-enum Mukjipa: Int, CaseIterable, GameElement {
+enum Mukjipa: Int, MukjipaElement {
     case none = 0
     case muk = 1
     case ji = 2
